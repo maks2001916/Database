@@ -2,4 +2,11 @@
     <string name="app_name">Database</string>
     <string name="app_name_ru">База данных</string>
     <string name="to_begin">Начать</string>
+    <string name="name">Имя</string>
+    <string name="surName">Фамилия</string>
+    <string name="post">Должность</string>
+    <string name="number">Телефон</string>
+    <string name="save_data">Сохранить данные</string>
+    <string name="get_data">Получить данные</string>
+    <string name="delete_data">Удалить данные</string>
 </resources>
