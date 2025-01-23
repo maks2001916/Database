@@ -9,6 +9,7 @@
     tools:context=".DataBaseActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarDbTB"
         app:title="@string/app_name_ru"
         android:background="@color/purple"
         android:layout_width="match_parent"
