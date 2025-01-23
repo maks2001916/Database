@@ -1,5 +1,6 @@
 package com.example.database
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -21,10 +22,14 @@ class MainActivity : AppCompatActivity() {
 
         init()
 
-
+        startBTN.setOnClickListener {
+            var intent = Intent(this, DataBaseActivity::class.java)
+            startActivity(intent)
+         }
 
     }
 
+    //Инициализация объектов
     private fun init() {
         titleTV = findViewById(R.id.appNameTV)
         startBTN = findViewById(R.id.openDbBTN)
