@@ -1,16 +1,32 @@
 package com.example.database
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import android.annotation.SuppressLint
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 class DataBaseActivity : AppCompatActivity() {
 
     private val db = DBHelper(this, null)
+
+    private var postList = mutableListOf(
+        "Начальник производства",
+        "Главный инженер",
+        "Главный технолог",
+        "Главный механик",
+        "Главный энергетик",
+        "Главный сварщик",
+        "Начальник участка",
+        "Начальник цеха (участка)",
+        "Производитель работ (прораб)",
+        "Бригадир на производстве"
+    )
 
     private lateinit var toolbarTB: Toolbar
     private lateinit var nameET: EditText
@@ -26,6 +42,7 @@ class DataBaseActivity : AppCompatActivity() {
     private lateinit var postTV: TextView
     private lateinit var numberTV: TextView
 
+    @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,7 +50,37 @@ class DataBaseActivity : AppCompatActivity() {
 
         init()
 
-
+        saveDataBTN.setOnClickListener {
+            val name = nameET.text.toString()
+            val post = postACTV.text.toString()
+            val number = numberET.text.toString()
+            db.addName(name, post, number)
+            Toast.makeText(this, "$name, $post и $number добавлены в базу данных", Toast.LENGTH_LONG).show()
+            nameET.text.clear()
+            postACTV.text.clear()
+            numberET.text.clear()
+        }
+        getDataBTN.setOnClickListener {
+            val cursor = db.getInfo()
+            if (cursor != null && cursor.moveToFirst()) {
+                cursor.moveToFirst()
+                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.TABLE_NAME)) + "\n")
+                postTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_POST)) + "\n")
+                numberTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NUMBER)) + "\n")
+            }
+            while (cursor!!.moveToNext()) {
+                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.TABLE_NAME)) + "\n")
+                postTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_POST)) + "\n")
+                numberTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NUMBER)) + "\n")
+            }
+            cursor.close()
+        }
+        deleteDataBTN.setOnClickListener {
+            db.removeAll()
+            nameTV.text = ""
+            postTV.text = ""
+            numberTV.text = ""
+        }
 
     }
 
@@ -52,5 +99,12 @@ class DataBaseActivity : AppCompatActivity() {
         postTV = findViewById(R.id.poatTV)
         numberTV = findViewById(R.id.numberTV)
         setSupportActionBar(toolbarTB)
+        var adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            postList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        postACTV.setAdapter(adapter)
     }
 }
