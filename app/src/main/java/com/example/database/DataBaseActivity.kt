@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
 class DataBaseActivity : AppCompatActivity() {
+
+    private val db = DBHelper(this, null)
 
     private lateinit var toolbarTB: Toolbar
     private lateinit var nameET: EditText
