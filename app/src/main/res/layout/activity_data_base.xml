@@ -82,7 +82,7 @@
             android:text="@string/name"
             android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.3"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -112,7 +112,7 @@
             android:id="@+id/nameTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1.3"/>
 
         <TextView
             android:id="@+id/poatTV"

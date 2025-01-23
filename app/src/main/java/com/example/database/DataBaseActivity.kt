@@ -8,9 +8,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.annotation.SuppressLint
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
+
 class DataBaseActivity : AppCompatActivity() {
 
     private val db = DBHelper(this, null)
@@ -64,12 +68,12 @@ class DataBaseActivity : AppCompatActivity() {
             val cursor = db.getInfo()
             if (cursor != null && cursor.moveToFirst()) {
                 cursor.moveToFirst()
-                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.TABLE_NAME)) + "\n")
+                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NAME)) + "\n")
                 postTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_POST)) + "\n")
                 numberTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NUMBER)) + "\n")
             }
             while (cursor!!.moveToNext()) {
-                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.TABLE_NAME)) + "\n")
+                nameTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NAME)) + "\n")
                 postTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_POST)) + "\n")
                 numberTV.append(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NUMBER)) + "\n")
             }
@@ -106,5 +110,15 @@ class DataBaseActivity : AppCompatActivity() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         postACTV.setAdapter(adapter)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.db_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {R.id.exit -> finishAffinity() }
+        return super.onOptionsItemSelected(item)
     }
 }
